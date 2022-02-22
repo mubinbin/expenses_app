@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './home.dart';
+import 'widgets/home.dart';
 
 void main() {
   runApp(const ExpensesApp());
@@ -13,9 +13,7 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter App Practices',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple[50]!,
-        ),
+        primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
     );
