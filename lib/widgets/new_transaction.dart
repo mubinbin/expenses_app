@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './text_input.dart';
 
 class NewTransaction extends StatelessWidget {
 
@@ -18,38 +19,17 @@ class NewTransaction extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                label: Text.rich(
-                  TextSpan(children: <InlineSpan>[
-                    WidgetSpan(
-                      child: Text('Title'),
-                    ),
-                    WidgetSpan(
-                      child: Text('*', style: TextStyle(color: Colors.red)),
-                    ),
-                  ]),
-                ),
-              ),
+            TextInput(
+              inputController: titleController,
+              labelTitle: 'Title',
             ),
-            TextField(
-              controller: amountController,
-              decoration: const InputDecoration(
-                label: Text.rich(
-                  TextSpan(children: <InlineSpan>[
-                    WidgetSpan(
-                      child: Text('Amount'),
-                    ),
-                    WidgetSpan(
-                      child: Text('*', style: TextStyle(color: Colors.red)),
-                    ),
-                  ]),
-                ),
-              ),
+            TextInput(
+              inputController: amountController,
+              labelTitle: 'Amount',
             ),
             TextButton(
-              onPressed: () => addNewTransaction(titleController.text, double.parse(amountController.text)),
+              onPressed: () => addNewTransaction(
+                  titleController.text, double.parse(amountController.text)),
               child: const Text(
                 'Add Transaction',
                 style: TextStyle(color: Colors.purple),
