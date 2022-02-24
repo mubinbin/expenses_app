@@ -8,19 +8,21 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Expenses App')),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const <Widget>[
-          SizedBox(
-            child: Card(
-              child: Text("PH FOR CHARTS"),
-              elevation: 5,
-              //color: Colors.blue,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: const <Widget>[
+            SizedBox(
+              child: Card(
+                child: Text("PH FOR CHARTS"),
+                elevation: 5,
+                //color: Colors.blue,
+              ),
+              width: double.infinity,
             ),
-            width: double.infinity,
-          ),
-          UserTransactions(),
-        ],
+            UserTransactions(),
+          ],
+        ),
       ),
     );
   }
