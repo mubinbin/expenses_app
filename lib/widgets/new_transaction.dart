@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import './text_input.dart';
 
 class NewTransaction extends StatelessWidget {
-
   final Function addNewTransaction;
 
   NewTransaction({Key? key, required this.addNewTransaction}) : super(key: key);
@@ -22,10 +21,14 @@ class NewTransaction extends StatelessWidget {
             TextInput(
               inputController: titleController,
               labelTitle: 'Title',
+              addNewTransaction: () => addNewTransaction(
+                  titleController.text, double.parse(amountController.text)),
             ),
             TextInput(
               inputController: amountController,
               labelTitle: 'Amount',
+              addNewTransaction: () => addNewTransaction(
+                  titleController.text, double.parse(amountController.text)),
             ),
             TextButton(
               onPressed: () => addNewTransaction(
