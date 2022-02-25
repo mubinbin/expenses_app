@@ -7,7 +7,15 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Expenses App')),
+      appBar: AppBar(
+        title: const Text('Expenses App'),
+        actions: const <Widget>[
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.add, color: Colors.white),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -23,6 +31,10 @@ class MyHomePage extends StatelessWidget {
             UserTransactions(),
           ],
         ),
+      ),
+      floatingActionButton: const FloatingActionButton(
+        onPressed: null,
+        child: Icon(Icons.add),
       ),
     );
   }
