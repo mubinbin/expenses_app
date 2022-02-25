@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'widgets/home.dart';
 
@@ -13,7 +14,11 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter App Practices',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Colors.purple[400],
+          primary: Colors.purple,
+        ),
       ),
       home: const MyHomePage(),
     );

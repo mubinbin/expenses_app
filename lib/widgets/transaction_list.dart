@@ -24,12 +24,11 @@ class TransactionList extends StatelessWidget {
                     horizontal: 15,
                   ),
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.white,
-                    ),
-                    color: Colors.purple,
-                  ),
+                      border: Border.all(
+                        width: 2,
+                        color: Colors.white,
+                      ),
+                      color: Theme.of(context).primaryColor),
                   padding: const EdgeInsets.all(10),
                   child: Text(
                     '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}', // only display 2 decimal
