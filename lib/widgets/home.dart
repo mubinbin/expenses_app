@@ -76,10 +76,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const SizedBox(
+            SizedBox(
               child: Card(
-                child: Text("PH FOR CHARTS"),
+                child: Text(
+                  "PH FOR CHARTS",
+                  style: Theme.of(context).textTheme.headline6,
+                ),
                 elevation: 5,
+                color: Theme.of(context).primaryColor,
               ),
               width: double.infinity,
             ),

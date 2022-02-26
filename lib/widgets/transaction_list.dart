@@ -12,52 +12,62 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 400,
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Row(
+      child: userTransactions.isEmpty
+          ? Column(
               children: <Widget>[
-                Container(
-                  // color: Colors.purple,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: Colors.white,
-                    ),
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: Text(
-                    '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}', // only display 2 decimal
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                Text(
+                  'No trasctions added yet',
+                  style: Theme.of(context).textTheme.headline4,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      userTransactions[index].title,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    Text(
-                      // DateFormat('MMM d, y').format(t.date),
-                      DateFormat.yMd()
-                          .add_jm()
-                          .format(userTransactions[index].date),
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                )
+                Image.asset('assets/images/waiting.png'),
               ],
+            )
+          : ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        // color: Colors.purple,
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 2,
+                            color: Colors.white,
+                          ),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}', // only display 2 decimal
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            userTransactions[index].title,
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          Text(
+                            // DateFormat('MMM d, y').format(t.date),
+                            DateFormat.yMd()
+                                .add_jm()
+                                .format(userTransactions[index].date),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+              itemCount: userTransactions.length,
             ),
-          );
-        },
-        itemCount: userTransactions.length,
-      ),
     );
   }
 }
