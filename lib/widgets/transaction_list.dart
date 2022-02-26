@@ -32,11 +32,7 @@ class TransactionList extends StatelessWidget {
                   padding: const EdgeInsets.all(10),
                   child: Text(
                     '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}', // only display 2 decimal
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
                 Column(
@@ -44,19 +40,14 @@ class TransactionList extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       userTransactions[index].title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Text(
                       // DateFormat('MMM d, y').format(t.date),
                       DateFormat.yMd()
                           .add_jm()
                           .format(userTransactions[index].date),
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],
                 )

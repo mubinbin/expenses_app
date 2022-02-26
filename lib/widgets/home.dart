@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Expenses App'),
+        title: const Text('Personal Expenses'),
         actions: <Widget>[
           IconButton(
             onPressed: () => _startAddNewTransaction(context),
@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () => _startAddNewTransaction(context),
-        splashColor: Colors.purple,
+        splashColor: Colors.white,
         child: const Icon(Icons.add),
       ),
     );
