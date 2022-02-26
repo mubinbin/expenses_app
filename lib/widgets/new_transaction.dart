@@ -38,9 +38,9 @@ class _NewTransactionState extends State<NewTransaction> {
             TextButton(
               onPressed: () => widget.addNewTransaction(
                   titleController.text, double.parse(amountController.text)),
-              child: const Text(
+              child: Text(
                 'Add Transaction',
-                style: TextStyle(color: Colors.purple),
+                style: TextStyle(color: Theme.of(context).primaryColor),
               ),
             ),
           ],
