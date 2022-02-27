@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import './chart_bar.dart';
 import '../models/trasaction.dart';
 
 class Chart extends StatelessWidget {
@@ -24,15 +25,25 @@ class Chart extends StatelessWidget {
         return {"day": DateFormat.E().format(weekDay), "amount": spendTotal};
       });
 
+  double get spendingTotal {
+    return groupedTransactions.fold(
+        0.0, (prev, cur) => prev + (cur['amount'] as double));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: groupedTransactions
-          .map(
-            (m) => Text(
-                '${m['day']}: ${(m['amount'] as double) * 100.truncateToDouble() / 100}'),
-          )
-          .toList(),
-    );
+        children: groupedTransactions
+            .map(
+              (m) => ChartBar(
+                barLabel: m['day'].toString(),
+                spendingAmount:
+                    (m['amount'] as double) * 100.truncateToDouble() / 100,
+                spendPercentage: spendingTotal == 0.0
+                    ? 0.0
+                    : (m['amount'] as double) / spendingTotal,
+              ),
+            )
+            .toList());
   }
 }

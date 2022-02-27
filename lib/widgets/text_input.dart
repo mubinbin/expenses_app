@@ -21,14 +21,16 @@ class TextInput extends StatelessWidget {
           labelTitle == 'Amount' ? TextInputType.number : TextInputType.text,
       decoration: InputDecoration(
         label: Text.rich(
-          TextSpan(children: <InlineSpan>[
-            WidgetSpan(
-              child: Text(labelTitle),
-            ),
-            const WidgetSpan(
-              child: Text('*', style: TextStyle(color: Colors.red)),
-            ),
-          ]),
+          TextSpan(
+            children: <InlineSpan>[
+              WidgetSpan(
+                child: Text(labelTitle),
+              ),
+              const WidgetSpan(
+                child: Text('*', style: TextStyle(color: Colors.red)),
+              ),
+            ],
+          ),
         ),
       ),
     );
