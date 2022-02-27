@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import './text_input.dart';
 
 class NewTransaction extends StatefulWidget {
@@ -14,6 +15,21 @@ class NewTransaction extends StatefulWidget {
 class _NewTransactionState extends State<NewTransaction> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  DateTime? _selectedDate;
+
+  void _dispalyDateModal() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime.now(),
+    ).then((date) {
+      if (date == null) return;
+      setState(() {
+        _selectedDate = date;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +44,32 @@ class _NewTransactionState extends State<NewTransaction> {
               inputController: _titleController,
               labelTitle: 'Title',
               addNewTransaction: () => widget.addNewTransaction(
-                  _titleController.text, double.parse(_amountController.text)),
+                  _titleController.text,
+                  double.parse(_amountController.text),
+                  _selectedDate),
             ),
             TextInput(
               inputController: _amountController,
               labelTitle: 'Amount',
               addNewTransaction: () => widget.addNewTransaction(
-                  _titleController.text, double.parse(_amountController.text)),
+                  _titleController.text,
+                  double.parse(_amountController.text),
+                  _selectedDate),
+            ),
+            Row(
+              children: <Widget>[
+                const Text('Picked Date: '),
+                _selectedDate == null
+                    ? const Text('Please pick a date')
+                    : Text(DateFormat.yMd().format(_selectedDate!)),
+                TextButton(
+                    onPressed: _dispalyDateModal,
+                    child: const Text('Choose Date')),
+              ],
             ),
             ElevatedButton(
-              onPressed: () => widget.addNewTransaction(
-                  _titleController.text, double.parse(_amountController.text)),
+              onPressed: () => widget.addNewTransaction(_titleController.text,
+                  double.parse(_amountController.text), _selectedDate),
               child: Text('Add Transaction',
                   style: Theme.of(context).textTheme.headline6),
             ),
