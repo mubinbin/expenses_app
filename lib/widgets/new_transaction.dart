@@ -12,8 +12,8 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController amountController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +25,20 @@ class _NewTransactionState extends State<NewTransaction> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
             TextInput(
-              inputController: titleController,
+              inputController: _titleController,
               labelTitle: 'Title',
               addNewTransaction: () => widget.addNewTransaction(
-                  titleController.text, double.parse(amountController.text)),
+                  _titleController.text, double.parse(_amountController.text)),
             ),
             TextInput(
-              inputController: amountController,
+              inputController: _amountController,
               labelTitle: 'Amount',
               addNewTransaction: () => widget.addNewTransaction(
-                  titleController.text, double.parse(amountController.text)),
+                  _titleController.text, double.parse(_amountController.text)),
             ),
             TextButton(
               onPressed: () => widget.addNewTransaction(
-                  titleController.text, double.parse(amountController.text)),
+                  _titleController.text, double.parse(_amountController.text)),
               child: Text(
                 'Add Transaction',
                 style: TextStyle(color: Theme.of(context).primaryColor),
