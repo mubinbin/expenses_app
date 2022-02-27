@@ -36,13 +36,11 @@ class _NewTransactionState extends State<NewTransaction> {
               addNewTransaction: () => widget.addNewTransaction(
                   _titleController.text, double.parse(_amountController.text)),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () => widget.addNewTransaction(
                   _titleController.text, double.parse(_amountController.text)),
-              child: Text(
-                'Add Transaction',
-                style: TextStyle(color: Theme.of(context).primaryColor),
-              ),
+              child: Text('Add Transaction',
+                  style: Theme.of(context).textTheme.headline6),
             ),
           ],
         ),
