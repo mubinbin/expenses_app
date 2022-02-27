@@ -31,18 +31,26 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: groupedTransactions
             .map(
-              (m) => ChartBar(
-                barLabel: m['day'].toString(),
-                spendingAmount:
-                    (m['amount'] as double) * 100.truncateToDouble() / 100,
-                spendPercentage: spendingTotal == 0.0
-                    ? 0.0
-                    : (m['amount'] as double) / spendingTotal,
+              (m) => Flexible(
+                fit: FlexFit.tight,
+                child: ChartBar(
+                  barLabel: m['day'].toString(),
+                  spendingAmount:
+                      (m['amount'] as double) * 100.truncateToDouble() / 100,
+                  spendPercentage: spendingTotal == 0.0
+                      ? 0.0
+                      : (m['amount'] as double) / spendingTotal,
+                ),
               ),
             )
-            .toList());
+            .toList(),
+      ),
+    );
   }
 }
