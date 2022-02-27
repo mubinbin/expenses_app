@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _userTransactions.add(newTx);
     });
 
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(); //hide the modal after submitting textfield
   }
 
   void _startAddNewTransaction(BuildContext context) {
