@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import './text_input.dart';
 
-class NewTransaction extends StatelessWidget {
-
+class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
 
-  NewTransaction({Key? key, required this.addNewTransaction}) : super(key: key);
+  const NewTransaction({Key? key, required this.addNewTransaction}) : super(key: key);
 
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
@@ -18,41 +23,24 @@ class NewTransaction extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            TextField(
-              controller: titleController,
-              decoration: const InputDecoration(
-                label: Text.rich(
-                  TextSpan(children: <InlineSpan>[
-                    WidgetSpan(
-                      child: Text('Title'),
-                    ),
-                    WidgetSpan(
-                      child: Text('*', style: TextStyle(color: Colors.red)),
-                    ),
-                  ]),
-                ),
-              ),
+            TextInput(
+              inputController: titleController,
+              labelTitle: 'Title',
+              addNewTransaction: () => widget.addNewTransaction(
+                  titleController.text, double.parse(amountController.text)),
             ),
-            TextField(
-              controller: amountController,
-              decoration: const InputDecoration(
-                label: Text.rich(
-                  TextSpan(children: <InlineSpan>[
-                    WidgetSpan(
-                      child: Text('Amount'),
-                    ),
-                    WidgetSpan(
-                      child: Text('*', style: TextStyle(color: Colors.red)),
-                    ),
-                  ]),
-                ),
-              ),
+            TextInput(
+              inputController: amountController,
+              labelTitle: 'Amount',
+              addNewTransaction: () => widget.addNewTransaction(
+                  titleController.text, double.parse(amountController.text)),
             ),
             TextButton(
-              onPressed: () => addNewTransaction(titleController.text, double.parse(amountController.text)),
-              child: const Text(
+              onPressed: () => widget.addNewTransaction(
+                  titleController.text, double.parse(amountController.text)),
+              child: Text(
                 'Add Transaction',
-                style: TextStyle(color: Colors.purple),
+                style: TextStyle(color: Theme.of(context).primaryColor),
               ),
             ),
           ],
