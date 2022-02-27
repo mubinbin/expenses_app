@@ -39,11 +39,14 @@ class TransactionList extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: CircleAvatar(
+                      radius: 30,
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: FittedBox(
                           child: Text(
-                              '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}'),
+                            '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                         ),
                       ),
                       backgroundColor: Theme.of(context).primaryColor,
@@ -53,7 +56,7 @@ class TransactionList extends StatelessWidget {
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     subtitle: Text(
-                      // DateFormat('MMM d, y').format(t.date),
+                      // DateFormat('MMM d, y').format(userTransactions[index].date),
                       DateFormat.yMd()
                           .add_jm()
                           .format(userTransactions[index].date),
