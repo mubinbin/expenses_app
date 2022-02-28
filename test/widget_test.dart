@@ -14,7 +14,9 @@ void main() {
   testWidgets('home page is rendered', (WidgetTester tester) async {
     await tester.pumpWidget(const ExpensesApp());
 
-    expect(find.text('Expenses App'), findsOneWidget);
+    expect(find.text('Personal Expenses'), findsOneWidget);
     expect(find.text('My App'), findsNothing);
+
+    expect(find.byIcon(Icons.add), findsNWidgets(2));
   });
 }
