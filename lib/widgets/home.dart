@@ -13,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
+  bool _barChartIsShown = false;
 
   List<Transaction> get _recentTransactions {
     return _userTransactions
@@ -61,10 +62,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _showBarChar(bool val) {
+    setState(() {
+      _barChartIsShown = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final MediaQueryData _mediaQuery = MediaQuery.of(context);
+    bool _isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     final AppBar _appBar = AppBar(
       title: const Text('Personal Expenses'),
@@ -82,21 +91,30 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: (_mediaQuery.size.height - _appBar.preferredSize.height - _mediaQuery.padding.top) * 0.3,
-              padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
-              child: Card(
-                child: Chart(recentTransactions: _recentTransactions),
-                elevation: 6,
+            if (_isLandscape) SwitchListTile(title: const Text('Bar Chart View'), value: _barChartIsShown, onChanged: (val) => _showBarChar(val)),
+            if (!_isLandscape || (_isLandscape && _barChartIsShown))
+              Container(
+                height: (_mediaQuery.size.height -
+                        _appBar.preferredSize.height -
+                        _mediaQuery.padding.top) *
+                    (_isLandscape? 0.6 : 0.3),
+                padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
+                child: Card(
+                  child: Chart(recentTransactions: _recentTransactions),
+                  elevation: 6,
+                ),
               ),
-            ),
-            SizedBox(
-              height: (_mediaQuery.size.height - _appBar.preferredSize.height - _mediaQuery.padding.top) * 0.7,
-              child: TransactionList(
-                userTransactions: _userTransactions,
-                deleteTransaction: _deleteTransaction,
+            if (!_isLandscape || (_isLandscape && !_barChartIsShown))
+              SizedBox(
+                height: (_mediaQuery.size.height -
+                        _appBar.preferredSize.height -
+                        _mediaQuery.padding.top) *
+                    (_isLandscape ? 0.8 : 0.7),
+                child: TransactionList(
+                  userTransactions: _userTransactions,
+                  deleteTransaction: _deleteTransaction,
+                ),
               ),
-            ),
           ],
         ),
       ),
