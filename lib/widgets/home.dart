@@ -41,10 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _deleteTransaction(String id) {
-    setState(
-      () =>
-          _userTransactions.removeWhere((transaction) => transaction.id == id),
-    );
+    setState(() =>
+        _userTransactions.removeWhere((transaction) => transaction.id == id));
   }
 
   void _startAddNewTransaction(BuildContext context) {
@@ -65,30 +63,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final MediaQueryData _mediaQuery = MediaQuery.of(context);
+
+    final AppBar _appBar = AppBar(
+      title: const Text('Personal Expenses'),
+      actions: <Widget>[
+        IconButton(
+          onPressed: () => _startAddNewTransaction(context),
+          icon: const Icon(Icons.add, color: Colors.white),
+        )
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => _startAddNewTransaction(context),
-            icon: const Icon(Icons.add, color: Colors.white),
-          )
-        ],
-      ),
+      appBar: _appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 15, right: 15),
+            Container(
+              height: (_mediaQuery.size.height - _appBar.preferredSize.height - _mediaQuery.padding.top) * 0.3,
+              padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
               child: Card(
                 child: Chart(recentTransactions: _recentTransactions),
                 elevation: 6,
               ),
             ),
-            TransactionList(
-              userTransactions: _userTransactions,
-              deleteTransaction: _deleteTransaction,
+            SizedBox(
+              height: (_mediaQuery.size.height - _appBar.preferredSize.height - _mediaQuery.padding.top) * 0.7,
+              child: TransactionList(
+                userTransactions: _userTransactions,
+                deleteTransaction: _deleteTransaction,
+              ),
             ),
           ],
         ),
