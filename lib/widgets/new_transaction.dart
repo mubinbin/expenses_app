@@ -56,16 +56,20 @@ class _NewTransactionState extends State<NewTransaction> {
                   double.parse(_amountController.text),
                   _selectedDate),
             ),
-            Row(
-              children: <Widget>[
-                const Text('Picked Date: '),
-                _selectedDate == null
-                    ? const Text('Please pick a date')
-                    : Text(DateFormat.yMd().format(_selectedDate!)),
-                TextButton(
-                    onPressed: _dispalyDateModal,
-                    child: const Text('Choose Date')),
-              ],
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Text(_selectedDate == null
+                        ? 'Picked Date: Please pick a date'
+                        : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
+                  ),
+                  TextButton(
+                      onPressed: _dispalyDateModal,
+                      child: const Text('Choose Date')),
+                ],
+              ),
             ),
             ElevatedButton(
               onPressed: () => widget.addNewTransaction(_titleController.text,
