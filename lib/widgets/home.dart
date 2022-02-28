@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime selectedDate) {
     if (title.isEmpty || amount <= 0) {
       return;
     }
@@ -49,21 +49,34 @@ class _MyHomePageState extends State<MyHomePage> {
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: selectedDate,
     );
 
     setState(() {
       _userTransactions.add(newTx);
     });
 
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(); //hide the modal after submitting textfield
+  }
+
+  void _deleteTransaction(String id) {
+    setState(
+      () => _userTransactions.removeWhere((transaction) => transaction.id == id),
+    );
   }
 
   void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (BuildContext ctx) {
-        return NewTransaction(addNewTransaction: _addNewTransaction);
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: NewTransaction(addNewTransaction: _addNewTransaction),
+          ),
+        );
       },
     );
   }
@@ -84,8 +97,17 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(recentTransactions: _recentTransactions),
-            TransactionList(userTransactions: _userTransactions),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 15, right: 15),
+              child: Card(
+                child: Chart(recentTransactions: _recentTransactions),
+                elevation: 6,
+              ),
+            ),
+            TransactionList(
+              userTransactions: _userTransactions,
+              deleteTransaction: _deleteTransaction,
+            ),
           ],
         ),
       ),

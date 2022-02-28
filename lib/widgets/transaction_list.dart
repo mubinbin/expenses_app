@@ -4,8 +4,9 @@ import '../models/trasaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> userTransactions;
+  final Function deleteTransaction;
 
-  const TransactionList({Key? key, required this.userTransactions})
+  const TransactionList({Key? key, required this.userTransactions, required this.deleteTransaction})
       : super(key: key);
 
   @override
@@ -16,7 +17,7 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Text(
-                  'No trasctions added yet',
+                  'No transactions added yet',
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 const SizedBox(height: 20),
@@ -32,44 +33,41 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        // color: Colors.purple,
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                            color: Colors.white,
+                  elevation: 6,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 5,
+                    vertical: 8,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: FittedBox(
+                          child: Text(
+                            '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}',
+                            style: Theme.of(context).textTheme.headline6,
                           ),
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          '\$${((userTransactions[index].amount * 100).truncateToDouble() / 100)}', // only display 2 decimal
-                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            userTransactions[index].title,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                          Text(
-                            // DateFormat('MMM d, y').format(t.date),
-                            DateFormat.yMd()
-                                .add_jm()
-                                .format(userTransactions[index].date),
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ],
-                      )
-                    ],
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ),
+                    title: Text(
+                      userTransactions[index].title,
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    subtitle: Text(
+                      // DateFormat('MMM d, y').format(userTransactions[index].date),
+                      DateFormat.yMd()
+                          .add_jm()
+                          .format(userTransactions[index].date),
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => deleteTransaction(userTransactions[index].id),
+                      color: Theme.of(context).errorColor,
+                    ),
                   ),
                 );
               },
