@@ -4,8 +4,9 @@ import '../models/trasaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> userTransactions;
+  final Function deleteTransaction;
 
-  const TransactionList({Key? key, required this.userTransactions})
+  const TransactionList({Key? key, required this.userTransactions, required this.deleteTransaction})
       : super(key: key);
 
   @override
@@ -16,7 +17,7 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Text(
-                  'No trasctions added yet',
+                  'No transactions added yet',
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 const SizedBox(height: 20),
@@ -61,6 +62,11 @@ class TransactionList extends StatelessWidget {
                           .add_jm()
                           .format(userTransactions[index].date),
                       style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => deleteTransaction(userTransactions[index].id),
+                      color: Theme.of(context).errorColor,
                     ),
                   ),
                 );

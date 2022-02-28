@@ -59,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).pop(); //hide the modal after submitting textfield
   }
 
+  void _deleteTransaction(String id) {
+    setState(
+      () => _userTransactions.removeWhere((transaction) => transaction.id == id),
+    );
+  }
+
   void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -98,7 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 elevation: 6,
               ),
             ),
-            TransactionList(userTransactions: _userTransactions),
+            TransactionList(
+              userTransactions: _userTransactions,
+              deleteTransaction: _deleteTransaction,
+            ),
           ],
         ),
       ),
