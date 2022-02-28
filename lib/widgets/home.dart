@@ -13,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
+  bool _barChartIsShown = false;
 
   List<Transaction> get _recentTransactions {
     return _userTransactions
@@ -41,10 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _deleteTransaction(String id) {
-    setState(
-      () =>
-          _userTransactions.removeWhere((transaction) => transaction.id == id),
-    );
+    setState(() =>
+        _userTransactions.removeWhere((transaction) => transaction.id == id));
   }
 
   void _startAddNewTransaction(BuildContext context) {
@@ -63,33 +62,59 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _showBarChar(bool val) {
+    setState(() {
+      _barChartIsShown = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final MediaQueryData _mediaQuery = MediaQuery.of(context);
+    bool _isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final AppBar _appBar = AppBar(
+      title: const Text('Personal Expenses'),
+      actions: <Widget>[
+        IconButton(
+          onPressed: () => _startAddNewTransaction(context),
+          icon: const Icon(Icons.add, color: Colors.white),
+        )
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => _startAddNewTransaction(context),
-            icon: const Icon(Icons.add, color: Colors.white),
-          )
-        ],
-      ),
+      appBar: _appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0, left: 15, right: 15),
-              child: Card(
-                child: Chart(recentTransactions: _recentTransactions),
-                elevation: 6,
+            if (_isLandscape) SwitchListTile(title: const Text('Bar Chart View'), value: _barChartIsShown, onChanged: (val) => _showBarChar(val)),
+            if (!_isLandscape || (_isLandscape && _barChartIsShown))
+              Container(
+                height: (_mediaQuery.size.height -
+                        _appBar.preferredSize.height -
+                        _mediaQuery.padding.top) *
+                    (_isLandscape? 0.6 : 0.3),
+                padding: const EdgeInsets.only(top: 8.0, left: 10, right: 10),
+                child: Card(
+                  child: Chart(recentTransactions: _recentTransactions),
+                  elevation: 6,
+                ),
               ),
-            ),
-            TransactionList(
-              userTransactions: _userTransactions,
-              deleteTransaction: _deleteTransaction,
-            ),
+            if (!_isLandscape || (_isLandscape && !_barChartIsShown))
+              SizedBox(
+                height: (_mediaQuery.size.height -
+                        _appBar.preferredSize.height -
+                        _mediaQuery.padding.top) *
+                    (_isLandscape ? 0.8 : 0.7),
+                child: TransactionList(
+                  userTransactions: _userTransactions,
+                  deleteTransaction: _deleteTransaction,
+                ),
+              ),
           ],
         ),
       ),
