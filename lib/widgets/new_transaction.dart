@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import './text_input.dart';
+import 'select_date.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
@@ -17,7 +17,7 @@ class _NewTransactionState extends State<NewTransaction> {
   final TextEditingController _amountController = TextEditingController();
   DateTime? _selectedDate;
 
-  void _dispalyDateModal() {
+  void _displayDateModal() {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -56,21 +56,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   double.parse(_amountController.text),
                   _selectedDate),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_selectedDate == null
-                        ? 'Picked Date: Please pick a date'
-                        : 'Picked Date: ${DateFormat.yMd().format(_selectedDate!)}'),
-                  ),
-                  TextButton(
-                      onPressed: _dispalyDateModal,
-                      child: const Text('Choose Date')),
-                ],
-              ),
-            ),
+            SelectDate(selectedDate: _selectedDate, displayDateModal: _displayDateModal),
             ElevatedButton(
               onPressed: () => widget.addNewTransaction(_titleController.text,
                   double.parse(_amountController.text), _selectedDate),
